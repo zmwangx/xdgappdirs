@@ -8,8 +8,22 @@ when the relevant ``XDG_*`` environment variables are available. For instance,
 on macOS, when ``XDG_CONFIG_HOME`` is set to ``/Users/steve/.config``,
 ``user_config_dir('foo')`` evaluates to ``/Users/steve/.config/foo``, whereas
 when ``XDG_CONFIG_HOME`` is not set or empty, it evaluates to
-``/Users/steve/Library/Preferences/foo``. This gives XDG fans a choice while not
-mandating ``.config`` for everyone else, especially for GUI apps.
+``/Users/steve/Library/Application Support/foo``. This gives XDG fans a choice
+while not mandating ``.config`` for everyone else, especially for GUI apps.
+
+Other changes:
+
+- Reverts `ActiveState/appdirs#100
+  <https://github.com/ActiveState/appdirs/pull/100>`_. On macOS,
+  ``user_config_dir`` and ``site_config_dir`` evaluates to subdirs of
+  ``~/Library/Application Support`` and ``/Library/Application Support`` (unless
+  the relevant ``XDG_*`` env vars are set and non-empty), rather than subdirs of
+  ``~/Library/Preferences`` and ``/Library/Preferences``, which are specifically
+  for plists and not suitable for anything else. You don't need ``appdirs`` to
+  tell you where to write plists.
+
+- Properly handle empty ``XDG_*`` env vars. According to XDG BaseDir Spec,
+  defaults should be used when the env vars are empty.
 
 The original README for ``appdirs`` follows.
 
