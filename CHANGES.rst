@@ -1,6 +1,10 @@
 appdirs Changelog
 =================
 
+xdgappdirs 1.4.4.3
+------------------
+- Rename module to ``xdgappdirs`` to allow coexistence with ``appdirs``.
+
 xdgappdirs 1.4.4
 ----------------
 - Deviate from appdirs (see top of README)

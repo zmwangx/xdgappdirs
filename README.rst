@@ -2,7 +2,7 @@
  xdgappdirs
 ============
 
-This is a fork and drop-in replacement of `appdirs
+This is a fork and almost drop-in replacement of `appdirs
 <https://pypi.org/project/appdirs/>`_ that follows the XDG BaseDir Spec on macOS
 when the relevant ``XDG_*`` environment variables are available. For instance,
 on macOS, when ``XDG_CONFIG_HOME`` is set to ``/Users/steve/.config``,

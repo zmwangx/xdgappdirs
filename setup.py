@@ -15,8 +15,8 @@ def read(fname):
     return out
 
 
-# Do not import `appdirs` yet, lest we import some random version on sys.path.
-for line in read("appdirs.py").splitlines():
+# Do not import `xdgappdirs` yet, lest we import some random version on sys.path.
+for line in read("xdgappdirs.py").splitlines():
     if line.startswith("__version__"):
         version = ast.literal_eval(line.split("=", 1)[1].strip())
         break
@@ -50,5 +50,5 @@ setup(
     author_email='i@zhimingwang.org',
     url='https://github.com/zmwangx/xdgappdirs',
     license='MIT',
-    py_modules=["appdirs"],
+    py_modules=["xdgappdirs"],
 )
