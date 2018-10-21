@@ -84,7 +84,7 @@ def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
                 path = os.path.join(path, appauthor, appname)
             else:
                 path = os.path.join(path, appname)
-    elif system == 'darwin':
+    elif system == 'darwin' and not os.getenv('XDG_DATA_HOME'):
         path = os.path.expanduser('~/Library/Application Support/')
         if appname:
             path = os.path.join(path, appname)
@@ -137,7 +137,7 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
                 path = os.path.join(path, appauthor, appname)
             else:
                 path = os.path.join(path, appname)
-    elif system == 'darwin':
+    elif system == 'darwin' and not os.getenv('XDG_DATA_DIRS'):
         path = os.path.expanduser('/Library/Application Support')
         if appname:
             path = os.path.join(path, appname)
@@ -194,7 +194,7 @@ def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
     """
     if system == "win32":
         path = user_data_dir(appname, appauthor, None, roaming)
-    elif system == 'darwin':
+    elif system == 'darwin' and not os.getenv('XDG_CONFIG_HOME'):
         path = os.path.expanduser('~/Library/Preferences/')
         if appname:
             path = os.path.join(path, appname)
@@ -241,7 +241,7 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
         path = site_data_dir(appname, appauthor)
         if appname and version:
             path = os.path.join(path, version)
-    elif system == 'darwin':
+    elif system == 'darwin' and not os.getenv('XDG_CONFIG_DIRS'):
         path = os.path.expanduser('/Library/Preferences')
         if appname:
             path = os.path.join(path, appname)
@@ -306,7 +306,7 @@ def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True):
                 path = os.path.join(path, appname)
             if opinion:
                 path = os.path.join(path, "Cache")
-    elif system == 'darwin':
+    elif system == 'darwin' and not os.getenv('XDG_CACHE_HOME'):
         path = os.path.expanduser('~/Library/Caches')
         if appname:
             path = os.path.join(path, appname)
@@ -350,7 +350,7 @@ def user_state_dir(appname=None, appauthor=None, version=None, roaming=False):
 
     That means, by default "~/.local/state/<AppName>".
     """
-    if system in ["win32", "darwin"]:
+    if system == 'win32' or (system == 'darwin' and not os.getenv('XDG_STATE_HOME')):
         path = user_data_dir(appname, appauthor, None, roaming)
     else:
         path = os.getenv('XDG_STATE_HOME', os.path.expanduser("~/.local/state"))
@@ -393,7 +393,7 @@ def user_log_dir(appname=None, appauthor=None, version=None, opinion=True):
     value for Windows and appends "log" to the user cache dir for Unix.
     This can be disabled with the `opinion=False` option.
     """
-    if system == "darwin":
+    if system == "darwin" and not os.getenv('XDG_CACHE_HOME'):
         path = os.path.join(
             os.path.expanduser('~/Library/Logs'),
             appname)

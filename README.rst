@@ -1,5 +1,17 @@
-.. image:: https://secure.travis-ci.org/ActiveState/appdirs.png
-    :target: https://travis-ci.org/ActiveState/appdirs
+============
+ xdgappdirs
+============
+
+This is a fork and drop-in replacement of `appdirs
+<https://pypi.org/project/appdirs/>`_ that follows the XDG BaseDir Spec on macOS
+when the relevant ``XDG_*`` environment variables are available. For instance,
+on macOS, when ``XDG_CONFIG_HOME`` is set to ``/Users/steve/.config``,
+``user_config_dir('foo')`` evaluates to ``/Users/steve/.config/foo``, whereas
+when ``XDG_CONFIG_HOME`` is not set or empty, it evaluates to
+``/Users/steve/Library/Preferences/foo``. This gives XDG fans a choice while not
+mandating ``.config`` for everyone else, especially for GUI apps.
+
+The original README for ``appdirs`` follows.
 
 the problem
 ===========
@@ -117,7 +129,7 @@ On Linux::
     '/Users/trentm/Library/Logs/SuperApp'
 
 
-    
+
 Per-version isolation
 =====================
 
@@ -135,4 +147,3 @@ dirs::
     '/Users/trentm/Library/Caches/SuperApp/1.0'
     >>> dirs.user_log_dir
     '/Users/trentm/Library/Logs/SuperApp/1.0'
-
