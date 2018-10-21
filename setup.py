@@ -23,7 +23,7 @@ for line in read("appdirs.py").splitlines():
 
 
 setup(
-    name='appdirs',
+    name='xdgappdirs',
     version=version,
     description='A small Python module for determining appropriate ' + \
         'platform-specific dirs, e.g. a "user data dir".',
@@ -46,10 +46,8 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     keywords='application directory log cache user',
-    author='Trent Mick',
-    author_email='trentm@gmail.com',
-    maintainer='Trent Mick; Sridhar Ratnakumar; Jeff Rouse',
-    maintainer_email='trentm@gmail.com; github@srid.name; jr@its.to',
+    author='Zhiming Wang',
+    author_email='i@zhimingwang.org',
     url='https://github.com/ActiveState/appdirs',
     license='MIT',
     py_modules=["appdirs"],
