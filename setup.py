@@ -48,7 +48,7 @@ setup(
     keywords='application directory log cache user',
     author='Zhiming Wang',
     author_email='i@zhimingwang.org',
-    url='https://github.com/ActiveState/appdirs',
+    url='https://github.com/zmwangx/xdgappdirs',
     license='MIT',
     py_modules=["appdirs"],
 )
