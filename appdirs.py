@@ -89,7 +89,7 @@ def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
         if appname:
             path = os.path.join(path, appname)
     else:
-        path = os.getenv('XDG_DATA_HOME', os.path.expanduser("~/.local/share"))
+        path = os.getenv('XDG_DATA_HOME') or os.path.expanduser("~/.local/share")
         if appname:
             path = os.path.join(path, appname)
     if appname and version:
@@ -144,8 +144,7 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
     else:
         # XDG default for $XDG_DATA_DIRS
         # only first, if multipath is False
-        path = os.getenv('XDG_DATA_DIRS',
-                         os.pathsep.join(['/usr/local/share', '/usr/share']))
+        path = os.getenv('XDG_DATA_DIRS') or os.pathsep.join(['/usr/local/share', '/usr/share'])
         pathlist = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
         if appname:
             if version:
@@ -199,7 +198,7 @@ def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
         if appname:
             path = os.path.join(path, appname)
     else:
-        path = os.getenv('XDG_CONFIG_HOME', os.path.expanduser("~/.config"))
+        path = os.getenv('XDG_CONFIG_HOME') or os.path.expanduser("~/.config")
         if appname:
             path = os.path.join(path, appname)
     if appname and version:
@@ -248,7 +247,7 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
     else:
         # XDG default for $XDG_CONFIG_DIRS
         # only first, if multipath is False
-        path = os.getenv('XDG_CONFIG_DIRS', '/etc/xdg')
+        path = os.getenv('XDG_CONFIG_DIRS') or '/etc/xdg'
         pathlist = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
         if appname:
             if version:
@@ -311,7 +310,7 @@ def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True):
         if appname:
             path = os.path.join(path, appname)
     else:
-        path = os.getenv('XDG_CACHE_HOME', os.path.expanduser('~/.cache'))
+        path = os.getenv('XDG_CACHE_HOME') or os.path.expanduser('~/.cache')
         if appname:
             path = os.path.join(path, appname)
     if appname and version:
@@ -353,7 +352,7 @@ def user_state_dir(appname=None, appauthor=None, version=None, roaming=False):
     if system == 'win32' or (system == 'darwin' and not os.getenv('XDG_STATE_HOME')):
         path = user_data_dir(appname, appauthor, None, roaming)
     else:
-        path = os.getenv('XDG_STATE_HOME', os.path.expanduser("~/.local/state"))
+        path = os.getenv('XDG_STATE_HOME') or os.path.expanduser("~/.local/state")
         if appname:
             path = os.path.join(path, appname)
     if appname and version:
