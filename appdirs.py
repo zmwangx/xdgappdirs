@@ -138,7 +138,7 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
             else:
                 path = os.path.join(path, appname)
     elif system == 'darwin' and not os.getenv('XDG_DATA_DIRS'):
-        path = os.path.expanduser('/Library/Application Support')
+        path = '/Library/Application Support'
         if appname:
             path = os.path.join(path, appname)
     else:
@@ -184,17 +184,17 @@ def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
             for a discussion of issues.
 
     Typical user config directories are:
-        Mac OS X:               ~/Library/Preferences/<AppName>
+        Mac OS X:               same as user_data_dir
         Unix:                   ~/.config/<AppName>     # or in $XDG_CONFIG_HOME, if defined
         Win *:                  same as user_data_dir
 
     For Unix, we follow the XDG spec and support $XDG_CONFIG_HOME.
     That means, by default "~/.config/<AppName>".
     """
-    if system == "win32":
+    if system == 'win32':
         path = user_data_dir(appname, appauthor, None, roaming)
     elif system == 'darwin' and not os.getenv('XDG_CONFIG_HOME'):
-        path = os.path.expanduser('~/Library/Preferences/')
+        path = os.path.expanduser('~/Library/Application Support/')
         if appname:
             path = os.path.join(path, appname)
     else:
@@ -241,7 +241,7 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
         if appname and version:
             path = os.path.join(path, version)
     elif system == 'darwin' and not os.getenv('XDG_CONFIG_DIRS'):
-        path = os.path.expanduser('/Library/Preferences')
+        path = '/Library/Application Support'
         if appname:
             path = os.path.join(path, appname)
     else:
