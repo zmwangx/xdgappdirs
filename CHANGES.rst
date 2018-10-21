@@ -2,7 +2,7 @@ appdirs Changelog
 =================
 
 xdgappdirs 1.4.4
--------------
+----------------
 - Deviate from appdirs (see top of README)
 - [PR #92] Don't import appdirs from setup.py which resolves issue #91
 - Add Python 3.7 support
