@@ -1,11 +1,13 @@
 import sys
 import unittest
-import xdgxdgappdirs
+import xdgappdirs
 
 if sys.version_info[0] < 3:
     STRING_TYPE = basestring
+    import pathlib2 as pathlib
 else:
     STRING_TYPE = str
+    import pathlib
 
 
 class Test_AppDir(unittest.TestCase):
@@ -13,7 +15,7 @@ class Test_AppDir(unittest.TestCase):
         self.assertTrue(hasattr(xdgappdirs, "__version__"))
         self.assertTrue(hasattr(xdgappdirs, "__version_info__"))
 
-    def test_helpers(self):
+    def test_helpers_defaults(self):
         self.assertIsInstance(
             xdgappdirs.user_data_dir('MyApp', 'MyCompany'), STRING_TYPE)
         self.assertIsInstance(
@@ -24,6 +26,19 @@ class Test_AppDir(unittest.TestCase):
             xdgappdirs.user_state_dir('MyApp', 'MyCompany'), STRING_TYPE)
         self.assertIsInstance(
             xdgappdirs.user_log_dir('MyApp', 'MyCompany'), STRING_TYPE)
+
+    def test_helpers_paths(self):
+        self.assertIsInstance(
+            xdgappdirs.user_data_dir('MyApp', 'MyCompany', as_path=True), pathlib.Path)
+        self.assertIsInstance(
+            xdgappdirs.site_data_dir('MyApp', 'MyCompany', as_path=True), pathlib.Path)
+        self.assertIsInstance(
+            xdgappdirs.user_cache_dir('MyApp', 'MyCompany', as_path=True), pathlib.Path)
+        self.assertIsInstance(
+            xdgappdirs.user_state_dir('MyApp', 'MyCompany', as_path=True), pathlib.Path)
+        self.assertIsInstance(
+            xdgappdirs.user_log_dir('MyApp', 'MyCompany', as_path=True), pathlib.Path)
+
 
     def test_dirs(self):
         dirs = xdgappdirs.AppDirs('MyApp', 'MyCompany', version='1.0')

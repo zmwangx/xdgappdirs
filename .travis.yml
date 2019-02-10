@@ -12,4 +12,6 @@ matrix:
       dist: xenial
       sudo: true
 
-script: python setup.py test
+script:
+  - pip install -r requirements-dev.txt
+  - python setup.py test

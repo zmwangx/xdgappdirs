@@ -24,6 +24,15 @@ PY3 = sys.version_info[0] == 3
 
 if PY3:
     unicode = str
+    from pathlib import Path
+else:
+    try:
+        from pathlib2 import Path
+    except ImportError:
+        class Path:
+            def __init__(self, *args, **kwargs):
+                raise NotImplementedError("pathlib2 not available")
+
 
 if sys.platform.startswith('java'):
     import platform
@@ -42,7 +51,7 @@ else:
 
 
 
-def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
+def user_data_dir(appname=None, appauthor=None, version=None, roaming=False, as_path=False):
     r"""Return full path to the user-specific data dir for this application.
 
         "appname" is the name of application.
@@ -62,6 +71,9 @@ def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
             sync'd on login. See
             <http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx>
             for a discussion of issues.
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. On python 2.7 you need to
+            "pip install pathlib2".
 
     Typical user data directories are:
         Mac OS X:               ~/Library/Application Support/<AppName>
@@ -94,10 +106,12 @@ def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
             path = os.path.join(path, appname)
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
-def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
+def site_data_dir(appname=None, appauthor=None, version=None, multipath=False, as_path=False):
     r"""Return full path to the user-shared data dir for this application.
 
         "appname" is the name of application.
@@ -116,6 +130,10 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
             returned. By default, the first item from XDG_DATA_DIRS is
             returned, or '/usr/local/share/<AppName>',
             if XDG_DATA_DIRS is not set
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. If multipath is True, it does nothing.
+            Tip: On python 2.7 you need to "pip install pathlib2".
+
 
     Typical site data directories are:
         Mac OS X:   /Library/Application Support/<AppName>
@@ -155,14 +173,18 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
             path = os.pathsep.join(pathlist)
         else:
             path = pathlist[0]
+            if as_path:
+                path = Path(path)
         return path
 
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
-def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
+def user_config_dir(appname=None, appauthor=None, version=None, roaming=False, as_path=False):
     r"""Return full path to the user-specific config dir for this application.
 
         "appname" is the name of application.
@@ -182,6 +204,9 @@ def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
             sync'd on login. See
             <http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx>
             for a discussion of issues.
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. On python 2.7 you need to
+            "pip install pathlib2".
 
     Typical user config directories are:
         Mac OS X:               same as user_data_dir
@@ -203,10 +228,12 @@ def user_config_dir(appname=None, appauthor=None, version=None, roaming=False):
             path = os.path.join(path, appname)
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
-def site_config_dir(appname=None, appauthor=None, version=None, multipath=False):
+def site_config_dir(appname=None, appauthor=None, version=None, multipath=False, as_path=False):
     r"""Return full path to the user-shared data dir for this application.
 
         "appname" is the name of application.
@@ -224,6 +251,9 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
             which indicates that the entire list of config dirs should be
             returned. By default, the first item from XDG_CONFIG_DIRS is
             returned, or '/etc/xdg/<AppName>', if XDG_CONFIG_DIRS is not set
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. If multipath is True, it does nothing.
+            Tip: On python 2.7 you need to "pip install pathlib2".
 
     Typical site config directories are:
         Mac OS X:   same as site_data_dir
@@ -258,10 +288,12 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
             path = os.pathsep.join(pathlist)
         else:
             path = pathlist[0]
+    if as_path:
+        path = Path(path)
     return path
 
 
-def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True):
+def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True, as_path=False):
     r"""Return full path to the user-specific cache dir for this application.
 
         "appname" is the name of application.
@@ -278,6 +310,9 @@ def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True):
         "opinion" (boolean) can be False to disable the appending of
             "Cache" to the base app data dir for Windows. See
             discussion below.
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. On python 2.7 you need to
+            "pip install pathlib2".
 
     Typical user cache directories are:
         Mac OS X:   ~/Library/Caches/<AppName>
@@ -315,10 +350,12 @@ def user_cache_dir(appname=None, appauthor=None, version=None, opinion=True):
             path = os.path.join(path, appname)
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
-def user_state_dir(appname=None, appauthor=None, version=None, roaming=False):
+def user_state_dir(appname=None, appauthor=None, version=None, roaming=False, as_path=False):
     r"""Return full path to the user-specific state dir for this application.
 
         "appname" is the name of application.
@@ -338,6 +375,9 @@ def user_state_dir(appname=None, appauthor=None, version=None, roaming=False):
             sync'd on login. See
             <http://technet.microsoft.com/en-us/library/cc766489(WS.10).aspx>
             for a discussion of issues.
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. On python 2.7 you need to
+            "pip install pathlib2".
 
     Typical user state directories are:
         Mac OS X:  same as user_data_dir
@@ -357,10 +397,12 @@ def user_state_dir(appname=None, appauthor=None, version=None, roaming=False):
             path = os.path.join(path, appname)
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
-def user_log_dir(appname=None, appauthor=None, version=None, opinion=True):
+def user_log_dir(appname=None, appauthor=None, version=None, opinion=True, as_path=False):
     r"""Return full path to the user-specific log dir for this application.
 
         "appname" is the name of application.
@@ -377,6 +419,9 @@ def user_log_dir(appname=None, appauthor=None, version=None, opinion=True):
         "opinion" (boolean) can be False to disable the appending of
             "Logs" to the base app data dir for Windows, and "log" to the
             base cache dir for Unix. See discussion below.
+        "as_path" (boolean, default False) can be set to True to get pathlib.Path
+            objects instead of plain strings. On python 2.7 you need to
+            "pip install pathlib2".
 
     Typical user log directories are:
         Mac OS X:   ~/Library/Logs/<AppName>
@@ -408,53 +453,56 @@ def user_log_dir(appname=None, appauthor=None, version=None, opinion=True):
             path = os.path.join(path, "log")
     if appname and version:
         path = os.path.join(path, version)
+    if as_path:
+        path = Path(path)
     return path
 
 
 class AppDirs(object):
     """Convenience wrapper for getting application dirs."""
     def __init__(self, appname=None, appauthor=None, version=None,
-            roaming=False, multipath=False):
+            roaming=False, multipath=False, as_path=False):
         self.appname = appname
         self.appauthor = appauthor
         self.version = version
         self.roaming = roaming
         self.multipath = multipath
+        self.as_path = as_path
 
     @property
     def user_data_dir(self):
         return user_data_dir(self.appname, self.appauthor,
-                             version=self.version, roaming=self.roaming)
+                             version=self.version, roaming=self.roaming, as_path=self.as_path)
 
     @property
     def site_data_dir(self):
         return site_data_dir(self.appname, self.appauthor,
-                             version=self.version, multipath=self.multipath)
+                             version=self.version, multipath=self.multipath, as_path=self.as_path)
 
     @property
     def user_config_dir(self):
         return user_config_dir(self.appname, self.appauthor,
-                               version=self.version, roaming=self.roaming)
+                               version=self.version, roaming=self.roaming, as_path=self.as_path)
 
     @property
     def site_config_dir(self):
         return site_config_dir(self.appname, self.appauthor,
-                             version=self.version, multipath=self.multipath)
+                             version=self.version, multipath=self.multipath, as_path=self.as_path)
 
     @property
     def user_cache_dir(self):
         return user_cache_dir(self.appname, self.appauthor,
-                              version=self.version)
+                              version=self.version, as_path=self.as_path)
 
     @property
     def user_state_dir(self):
         return user_state_dir(self.appname, self.appauthor,
-                              version=self.version)
+                              version=self.version, as_path=self.as_path)
 
     @property
     def user_log_dir(self):
         return user_log_dir(self.appname, self.appauthor,
-                            version=self.version)
+                            version=self.version, as_path=self.as_path)
 
 
 #---- internal support stuff

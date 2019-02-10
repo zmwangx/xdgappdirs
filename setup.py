@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import sys
 # appdirs is a dependency of setuptools, so allow installing without it.
 try:
     from setuptools import setup
@@ -21,10 +22,13 @@ for line in read("xdgappdirs.py").splitlines():
         version = ast.literal_eval(line.split("=", 1)[1].strip())
         break
 
+extras_require = {"pathlib": "pathlib2"} if sys.version_info.major == 2 else {}
+
 
 setup(
     name='xdgappdirs',
     version=version,
+    extras_require=extras_require,
     description='A small Python module for determining appropriate ' + \
         'platform-specific dirs, e.g. a "user data dir".',
     long_description=read('README.rst') + '\n' + read('CHANGES.rst'),
