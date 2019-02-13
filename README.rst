@@ -26,7 +26,7 @@ Other changes:
   defaults should be used when the env vars are empty.
 
 - Support for returning `pathlib.Path`
-  ([contributed](https://github.com/zmwangx/xdgappdirs/pull/1) by @pmav99).
+  (`contributed <https://github.com/zmwangx/xdgappdirs/pull/1>`_ by @pmav99).
 
 The original README for ``appdirs`` follows.
 
