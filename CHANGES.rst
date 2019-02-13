@@ -1,6 +1,10 @@
 appdirs Changelog
 =================
 
+xdgappdirs 1.4.5
+----------------
+- Add support for returning ``pathlib.Path`` (#1).
+
 xdgappdirs 1.4.4.3
 ------------------
 - Rename module to ``xdgappdirs`` to allow coexistence with ``appdirs``.
