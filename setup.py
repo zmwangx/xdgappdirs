@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
 # appdirs is a dependency of setuptools, so allow installing without it.
