@@ -25,6 +25,9 @@ Other changes:
 - Properly handle empty ``XDG_*`` env vars. According to XDG BaseDir Spec,
   defaults should be used when the env vars are empty.
 
+- Support for returning `pathlib.Path`
+  ([contributed](https://github.com/zmwangx/xdgappdirs/pull/1) by @pmav99).
+
 The original README for ``appdirs`` follows.
 
 the problem
